@@ -11,9 +11,9 @@
     <form method="post">
         {% csrf_token %}
         {{form|crispy}}
-        <input class="btn btn-outline-primary" type="submit" name="login">
+        <input class="btn btn-outline-primary" type="submit" value="Register">
     </form>
 
-    <p class="mt-3">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    <p class="mt-3">Already have an account? <a class="a-black" href="{% url 'login' %}">Login</a></p>
 </div>
 {% endblock content%}

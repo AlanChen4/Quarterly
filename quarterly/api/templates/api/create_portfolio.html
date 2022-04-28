@@ -1,0 +1,22 @@
+{% extends 'api/main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Add a new portfolio</h1>
+    <form class="row" method="post">
+        {% csrf_token %}
+        <div class="col-md-6 m-auto">
+            <div class="row">
+                {{form.nickname|as_crispy_field}}
+            </div>
+            <div class="row">
+                {{form.description|as_crispy_field}}
+                <div class="form-text mb-5">To get the best advice as possible, please try to include context such as your age, goals, risk tolerance, or why you picked certain assets.</div>
+            </div>
+            <div class="row">
+                <input class="btn btn-outline-success" type="submit" value="Continue to adding portfolio assets">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

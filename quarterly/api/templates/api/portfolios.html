@@ -1,0 +1,84 @@
+{% extends 'api/main.html' %}
+{% block content %}
+<div class="container">
+    <h1>My Portfolios</h1>
+    <div class="py-2">
+        <div class="d-flex flex-row flex-nowrap overflow-auto">
+            {% for portfolio in portfolios %}
+                <div class="card card-body text-center justify-content-center">
+                    {{ portfolio.nickname }}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'edit_portfolio' portfolio.id %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon-btn m-2" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                                <path d="M16 5l3 3"></path>
+                            </svg>
+                        </a>
+                        <a href="{% url 'delete_portfolio' portfolio.id %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon-btn m-2" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="card card-body d-flex justify-content-center align-items-center">
+                <div>
+                <a href="{% url 'create_portfolio' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-btn" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                        <path d="M14 17h6m-3 -3v6"></path>
+                    </svg>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row">
+        <h4 class="my-4">Received Reviews</h4>
+        <a class="btn btn-black my-4 ms-auto">
+            Review A Portfolio
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"></path>
+                <line x1="13" y1="8" x2="15" y2="8"></line>
+                <line x1="13" y1="12" x2="15" y2="12"></line>
+            </svg>
+        </a>
+    </div>
+    <div class="row px-3">
+        {% if reviews|length > 0 %}
+        <table class="reviews-table">
+            <thead>
+                <tr>
+                    <th>Portfolio</th>
+                    <th>Date Received</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{review.portfolio.nickname}}</td>
+                    <td>{{review.created}}</td>
+                    <td>TODO</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h3 class="text-center">No Reviews Yet</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

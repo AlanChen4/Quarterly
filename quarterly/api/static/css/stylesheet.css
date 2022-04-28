@@ -1,0 +1,63 @@
+.btn-black {
+    background-color: #002233;
+    color: white;
+}
+
+.btn-black:hover {
+    background-color: #002233;
+    color: #19e3b0;
+}
+
+.card-body {
+    background-color: #002233;
+    border-radius: 1rem;
+    color: white;
+    font-size: 1.5rem;
+    min-height: 250px;
+    min-width: 400px;
+    max-width: 400px;
+    margin-right: 15px;
+}
+
+.card-body:hover {
+    background-color: #001220;
+    transition: 0.5s;
+}
+
+.icon-btn {
+    color: #19e3b0;
+}
+
+.icon-btn:hover {
+    color: white;
+    transition: 0.8s;
+}
+
+.reviews-table {
+    border-collapse: collapse;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.reviews-table thead tr {
+    background-color: #002233;
+    color: #ffffff;
+    text-align: left;
+}
+
+.reviews-table th,
+.reviews-table td {
+    padding: 12px 15px;
+}
+
+.reviews-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.reviews-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.reviews-table tbody tr:last-of-type {
+    border-bottom: 2px solid #19e3b0;
+}

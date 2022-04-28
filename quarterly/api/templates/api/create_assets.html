@@ -1,0 +1,56 @@
+{% extends 'api/main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    {% if portfolio %}
+        <h1 class="text-center">Add assets to {{portfolio.nickname}}</h1>
+        {% for asset in assets %}
+            <form class="row" method="post">
+                {% csrf_token %}
+                <div class="col-md-8 m-auto">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">Ticker</label>
+                            <input class="form-control mb-3" type="text" value="{{asset.ticker}}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Name</label>
+                            <input class="form-control mb-3" type="text" value="{{asset.name}}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Holdings %</label>
+                            <input class="form-control mb-3" type="text" value="{{asset.holdings}}">
+                        </div>
+                    </div>
+                    <a class="btn btn-outline-danger mb-5" href="{% url 'delete_asset' asset.id %}">Remove</a>
+                </div>
+            </form>
+        {% endfor %}
+        <form class="row" method="post">
+            {% csrf_token %}
+            <div class="col-md-8 m-auto">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{form.ticker|as_crispy_field}}
+                    </div>
+                    <div class="col-md-6">
+                        {{form.name|as_crispy_field}}
+                    </div>
+                    <div class="col-md-3">
+                        {{form.holdings|as_crispy_field}}
+                    </div>
+                </div>
+                <input class="btn btn-outline-success mb-5" type="submit" value="Add">
+            </div>
+        </form>
+    {% else %}
+        <h1 class="text-center">Uh Oh!</h1>
+        <p class="text-center">An error occured while creating your portfolio, please try again or contact us for help if this persists</p>
+    {% endif %}
+    <div class="col-md-4 mx-auto mb-5">
+        <div class="row">
+            <a href="/" class="btn btn-outline-primary mb-5">Finish</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
