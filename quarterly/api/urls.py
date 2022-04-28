@@ -9,5 +9,6 @@ urlpatterns = [
     path('portfolio/<uuid:pk>/delete/', PortfolioDelete.as_view(), name='delete_portfolio'),
 
     path('assets/<uuid:pk>/', AssetCreate.as_view(), name='create_assets'),
+    path('assets/<uuid:pk>/update/', AssetUpdate, name='update_asset'),
     path('assets/<uuid:pk>/delete/', AssetDelete.as_view(), name='delete_asset'),
 ]

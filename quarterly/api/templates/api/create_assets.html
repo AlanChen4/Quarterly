@@ -5,24 +5,28 @@
     {% if portfolio %}
         <h1 class="text-center">Add assets to {{portfolio.nickname}}</h1>
         {% for asset in assets %}
-            <form class="row" method="post">
+            <form class="row" action="{% url 'update_asset' asset.id %}" method="post">
                 {% csrf_token %}
                 <div class="col-md-8 m-auto">
                     <div class="row">
                         <div class="col-md-3">
                             <label class="form-label">Ticker</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.ticker}}">
+                            <input class="form-control mb-3" type="text" name="ticker" value="{{asset.ticker}}">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Name</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.name}}">
+                            <input class="form-control mb-3" type="text" name="name" value="{{asset.name}}">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Holdings %</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.holdings}}">
+                            <input class="form-control mb-3" type="text" name="holdings" value="{{asset.holdings}}">
                         </div>
                     </div>
-                    <a class="btn btn-outline-danger mb-5" href="{% url 'delete_asset' asset.id %}">Remove</a>
+                    <div class="row mb-5">
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success col-md-2 mx-2" type="submit" value="Update" />
+                        <a class="btn btn-outline-danger col-md-2 mx-2" href="{% url 'delete_asset' asset.id %}">Remove</a>
+                    </div>
                 </div>
             </form>
         {% endfor %}
@@ -40,7 +44,9 @@
                         {{form.holdings|as_crispy_field}}
                     </div>
                 </div>
-                <input class="btn btn-outline-success mb-5" type="submit" value="Add">
+                <div class="row">
+                    <input class="btn btn-outline-success mb-5 col-md-2 mx-2" type="submit" value="Add">
+                </div>
             </div>
         </form>
     {% else %}

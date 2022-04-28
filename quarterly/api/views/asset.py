@@ -1,5 +1,7 @@
 import uuid
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -35,6 +37,26 @@ class AssetCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         portfolio_id = uuid.UUID(self.request.get_full_path().split('/')[2])
         return reverse_lazy('create_assets', kwargs={'pk': portfolio_id})
+
+
+@login_required
+def AssetUpdate(request, **kwargs):
+    if request.method == 'POST':
+        asset = Asset.objects.filter(id=kwargs['pk'])
+        if not asset.exists():
+            return HttpResponse(status=404)
+        else:
+            asset.update(
+                ticker=request.POST.get('ticker'),
+                name=request.POST.get('name'),
+                holdings=request.POST.get('holdings'),
+            )
+
+            # redirect back to original page
+            next = request.POST.get('next', '/')
+            return HttpResponseRedirect(next)
+    else:
+        return HttpResponse(status=405)
 
 
 class AssetDelete(LoginRequiredMixin, DeleteView):
