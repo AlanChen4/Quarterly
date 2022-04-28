@@ -14,42 +14,49 @@
         </div>
         <div class="col-md-6">
             {% for asset in assets %}
-                <form method="post">
+                <form action="{% url 'update_asset' asset.id %}" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-3">
                             <label class="form-label">Ticker</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.ticker}}">
+                            <input class="form-control mb-3" type="text" name="ticker" value="{{asset.ticker}}">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Name</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.name}}">
+                            <input class="form-control mb-3" type="text" name="name" value="{{asset.name}}">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Holdings %</label>
-                            <input class="form-control mb-3" type="text" value="{{asset.holdings}}">
+                            <input class="form-control mb-3" type="text" name="holdings" value="{{asset.holdings}}">
                         </div>
                     </div>
-                    <a class="btn btn-outline-danger mb-5" href="{% url 'delete_asset' asset.id %}">Remove</a>
+                    <div class="row mb-5">
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success col-md-2 mx-2" type="submit" name="submit-type" value="Update" />
+                        <input class="btn btn-outline-danger col-md-2 mx-2" type="submit" name="submit-type" value="Delete" />
+                    </div>
                 </form>
             {% endfor %}
-            <form method="post">
+            <form action="{% url 'create_asset_function' portfolio.id %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-3">
                         <label class="form-label">Ticker</label>
-                        <input class="form-control mb-3" type="text">
+                        <input class="form-control mb-3" type="text" name="ticker" value="{{asset.ticker}}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Name</label>
-                        <input class="form-control mb-3" type="text">
+                        <input class="form-control mb-3" type="text" name="name" value="{{asset.name}}">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Holdings %</label>
-                        <input class="form-control mb-3" type="text">
+                        <input class="form-control mb-3" type="text" name="holdings" value="{{asset.holdings}}">
                     </div>
                 </div>
-                <input class="btn btn-outline-success mb-5" type="submit" value="Add">
+                <div class="row mb-5">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input class="btn btn-outline-success col-md-2 mx-2" type="submit" value="Add">
+                </div>
             </form>
         </div>
     </div>

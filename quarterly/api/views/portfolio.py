@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 from django.urls import reverse_lazy
 
@@ -29,16 +28,15 @@ class PortfolioList(LoginRequiredMixin, ListView):
         return context
 
 
-class PortfolioDetail(LoginRequiredMixin, FormMixin, DetailView):
+class PortfolioUpdate(LoginRequiredMixin, UpdateView):
     model = Portfolio
     form_class = PortfolioForm
     content_object_name = 'portfolio'
-    template_name = 'api/edit_portfolio.html'
+    template_name = 'api/update_portfolio.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # add all assets linked to this portfolio
         context['assets'] = Asset.objects.filter(portfolio=self.object)
 
         return context
@@ -51,6 +49,9 @@ class PortfolioDetail(LoginRequiredMixin, FormMixin, DetailView):
 
         return initial
 
+    def get_success_url(self):
+        return reverse_lazy('update_portfolio', kwargs={'pk': self.object.id}) 
+
 
 class PortfolioCreate(LoginRequiredMixin, CreateView):
     model = Portfolio
@@ -62,7 +63,7 @@ class PortfolioCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('create_assets', kwargs={'pk': self.object.id})
+        return reverse_lazy('create_asset', kwargs={'pk': self.object.id})
 
 
 class PortfolioDelete(LoginRequiredMixin, DeleteView):
