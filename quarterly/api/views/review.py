@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Max
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
@@ -38,3 +39,18 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('portfolios')
+
+
+class ReviewDetail(LoginRequiredMixin, DetailView):
+    model = Review
+    template_name = 'api/detail_review.html'
+
+    def get_context_data(self, **kwargs):
+        portfolio = self.object.portfolio
+        assets = Asset.objects.all().filter(portfolio=portfolio.id)
+
+        context = super().get_context_data()
+        context['portfolio'] = portfolio
+        context['assets'] = assets
+
+        return context

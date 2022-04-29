@@ -13,4 +13,5 @@ urlpatterns = [
     path('assets/<uuid:pk>/update/', AssetUpdate, name='update_asset'),
 
     path('review/', ReviewCreate.as_view(), name='create_review'),
+    path('review/<uuid:pk>/', ReviewDetail.as_view(), name='review'),
 ]

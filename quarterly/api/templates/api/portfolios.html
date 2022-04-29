@@ -71,7 +71,9 @@
                 <tr>
                     <td>{{review.portfolio.nickname}}</td>
                     <td>{{review.created}}</td>
-                    <td>TODO</td>
+                    <td>
+                        <a class="a-black" href="{% url 'review' review.id %}">View</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
