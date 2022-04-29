@@ -1,0 +1,36 @@
+{% extends 'api/main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Write a Review</h1>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="row">
+                <h5>Portfolio Assets</h5>
+                <ol class="list-group list-group-numbered">
+                {% for asset in assets %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ asset.ticker }}</div>
+                            {{ asset.name }}
+                        </div>
+                        <span class="badge bg-success rounded-pill">{{ asset.holdings }} %</span>
+                    </li>
+                {% endfor %}
+                </ol>
+            </div>
+            <div class="row mt-4">
+                <h5>Portfolio Description</h5>
+                <input class="form-control" type="text" value="{{ portfolio.description }}" readonly>
+            </div>
+        </div>
+        <form class="col-md-6" method="post">
+            {% csrf_token %}
+            {{ form.description|as_crispy_field }}
+            <div class="row">
+                <input type="submit" value="Write Review" class="btn btn-black col-md-6 ms-auto">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

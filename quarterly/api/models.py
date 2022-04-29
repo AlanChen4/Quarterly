@@ -20,12 +20,12 @@ class Review(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True)
-    description = models.TextField()
+    description = models.TextField(verbose_name='Review Description')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.author}->{self.portfolio.nickname}"
+        return f"{self.author}: {self.portfolio.nickname}"
 
 
 class Asset(models.Model):
