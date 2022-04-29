@@ -11,26 +11,48 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
     fields = ('description',)
     template_name = 'api/create_review.html'
-    portfolio = Portfolio.objects.all() \
-                .annotate(num_reviews=Count('review')) \
-                .order_by('num_reviews')[0]
 
-    assets = Asset.objects.filter(portfolio=portfolio)
+    def _get_valid_portfolio(self):
+        """
+        Return respective portfolio to write review on to the context
+        
+        Sort by:
+        - Number of reviews
+        - To be added...
+
+        Exclude:
+        - Portfolios that are your own
+        - Portfolios you've already reviewed before
+        """
+        portfolios = Portfolio.objects.all() \
+                    .annotate(num_reviews=Count('review')) \
+                    .order_by('num_reviews')
+
+        # exclude portfolios that are your own
+        portfolios = portfolios.exclude(user=self.request.user)
+
+        # only keep portfolios you haven't reviewed before
+        for review in Review.objects.filter(author=self.request.user):
+            portfolios = portfolios.exclude(id=review.portfolio.id)
+
+        # select first portfolio to meet all conditions
+        return portfolios[0] if len(portfolios) > 0 else None
+
+
+    def dispatch(self, request, *args, **kwargs):
+        self.portfolio = self._get_valid_portfolio()
+        self.assets = Asset.objects.filter(portfolio=self.portfolio) if self.portfolio is not None else None
+
+        return super(ReviewCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        print('portfolio', self.portfolio)
         form.instance.portfolio = self.portfolio
 
         return super().form_valid(form)
 
     def get_context_data(self):
-        """
-        Add respective portfolio to write review on to the context
-        
-        The portfolio to show will be sorted by, in this order:
-        - Number of reviews
-        - To be added...
-        """
         context = super().get_context_data()
         context['portfolio'] = self.portfolio
         context['assets'] = self.assets

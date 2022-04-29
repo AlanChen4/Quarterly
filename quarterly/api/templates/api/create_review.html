@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
+    {% if portfolio %}
     <h1 class="text-center">Write a Review</h1>
     <div class="row mt-4">
         <div class="col-md-6">
@@ -32,5 +33,9 @@
             </div>
         </form>
     </div>
+    {% else %}
+    <h1 class="text-center">No available portfolios</h1>
+    <p class="text-center">You must be on fire with writing reviews (or we have a bug in our code), please check back later!</p>
+    {% endif %}
 </div>
 {% endblock content %}

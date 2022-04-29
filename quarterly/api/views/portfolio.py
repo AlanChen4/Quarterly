@@ -27,6 +27,9 @@ class PortfolioList(LoginRequiredMixin, ListView):
 
         return context
 
+    def get_queryset(self):
+        return Portfolio.objects.all().filter(user=self.request.user)
+
 
 class PortfolioUpdate(LoginRequiredMixin, UpdateView):
     model = Portfolio

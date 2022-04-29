@@ -25,7 +25,7 @@ class Review(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.author}: {self.portfolio.nickname}"
+        return f"{self.author}: {self.portfolio}"
 
 
 class Asset(models.Model):
