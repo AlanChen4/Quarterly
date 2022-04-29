@@ -1,7 +1,7 @@
 {% extends 'api/main.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container-fluid px-4">
+<div class="container">
     <h1>{{portfolio.nickname}}</h1>
     <div class="row">
         <div class="col-md-6">
@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 {{form.nickname|as_crispy_field}}
                 {{form.description|as_crispy_field}}
-                <input class="btn btn-outline-primary" type="submit" value="Update Portfolio Details" />
+                <input class="btn btn-black" type="submit" value="Update Portfolio Details" />
             </form>
         </div>
         <div class="col-md-6">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="row mb-5">
                         <input type="hidden" name="next" value="{{ request.path }}">
-                        <input class="btn btn-outline-success col-md-2 mx-2" type="submit" name="submit-type" value="Update" />
+                        <input class="btn btn-black col-md-2 mx-2" type="submit" name="submit-type" value="Update" />
                         <input class="btn btn-outline-danger col-md-2 mx-2" type="submit" name="submit-type" value="Delete" />
                     </div>
                 </form>
@@ -55,9 +55,13 @@
                 </div>
                 <div class="row mb-5">
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <input class="btn btn-outline-success col-md-2 mx-2" type="submit" value="Add">
+                    <input class="btn btn-black col-md-2 mx-2" type="submit" value="Add">
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="row">
+            <a class="btn col-md-3 ms-auto btn-black" href="{% url 'portfolios' %}">Finish</a>
         </div>
     </div>
 </div>
