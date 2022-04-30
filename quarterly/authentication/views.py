@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, UpdateView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ class CustomLoginView(LoginView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('accounts')
+            return redirect('portfolios')
         return super().get(*args, **kwargs)
 
 
@@ -32,7 +33,7 @@ class RegisterPage(FormView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('accounts')
+            return redirect('portfolios')
         return super().get(*args, **kwargs)
 
 
@@ -44,8 +45,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user = form.save()
         if user is not None:
-            return redirect('accounts')
+            return redirect('portfolios')
         return super().form_valid(form)
 
     def get_queryset(self):
         return CustomUser.objects.filter(pk=self.request.user.pk)
+
+
+class LandingPageView(TemplateView):
+    template_name = "authentication/landing_page.html"

@@ -1,3 +1,11 @@
+.a-black {
+    color: #002233;
+}
+
+.a-black:hover {
+    color: #19e3b0;
+}
+
 .btn-black {
     background-color: #002233;
     border: 2px solid #002233;

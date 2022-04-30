@@ -46,39 +46,13 @@
         <div class="offcanvas-body px-0">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                 <li class="nav-item">
-                    <a href="/" class="nav-link text-truncate">
-                        <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">home</span>
-                    </a>
+                    <a href="{% url 'portfolios' %}" class="nav-link text-truncate ms-2">Home</a>
                 </li>
-                <li>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link text-truncate">
-                        <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">dashboard</span> </a>
+                <li class="nav-item">
+                    <a href="{% url 'profile' user.id %}" class="nav-link text-truncate ms-2">Profile</a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">orders</span></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fs-5 bi-bootstrap"></i><span class="ms-1 d-none d-sm-inline">bootstrap</span>
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                        <li><a class="dropdown-item" href="#">new project...</a></li>
-                        <li><a class="dropdown-item" href="#">settings</a></li>
-                        <li><a class="dropdown-item" href="#">profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">sign out</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">products</span></a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-truncate">
-                        <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">customers</span> </a>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link text-truncate ms-2">Logout</a>
                 </li>
             </ul>
         </div>
