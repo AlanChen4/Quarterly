@@ -33,7 +33,8 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
         # only keep portfolios you haven't reviewed before
         for review in Review.objects.filter(author=self.request.user):
-            portfolios = portfolios.exclude(id=review.portfolio.id)
+            if review.portfolio != None:
+                portfolios = portfolios.exclude(id=review.portfolio.id)
 
         # select first portfolio to meet all conditions
         return portfolios[0] if len(portfolios) > 0 else None
