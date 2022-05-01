@@ -47,7 +47,6 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        print('portfolio', self.portfolio)
         form.instance.portfolio = self.portfolio
 
         return super().form_valid(form)
