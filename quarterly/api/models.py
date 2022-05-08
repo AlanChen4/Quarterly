@@ -2,6 +2,7 @@ import uuid
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from authentication.models import CustomUser
+from simple_history.models import HistoricalRecords
 
 
 class Portfolio(models.Model):
@@ -11,9 +12,10 @@ class Portfolio(models.Model):
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords()
 
     def __str__(self):
-        return f"{self.nickname}"
+        return f"{self.user.email}'s {self.nickname}"
 
 
 class Review(models.Model):
@@ -23,9 +25,11 @@ class Review(models.Model):
     description = models.TextField(verbose_name='Review Description')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    rated = models.BooleanField(default=False)
+    history = HistoricalRecords()
 
     def __str__(self):
-        return f"{self.author}: {self.portfolio}"
+        return f"{self.author} reviewed {self.portfolio}"
 
 
 class Asset(models.Model):
@@ -34,6 +38,7 @@ class Asset(models.Model):
     name = models.CharField(max_length=255)
     holdings = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.ticker} ({self.holdings}%)"

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'crispy_bootstrap5',
+    'simple_history',
     'whitenoise.runserver_nostatic',
 
     'api',
@@ -72,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    'simple_history.middleware.HistoryRequestMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 

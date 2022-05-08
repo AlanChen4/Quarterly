@@ -1,5 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Max
+from django.db.models import Count
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
@@ -66,6 +69,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 class ReviewDetail(LoginRequiredMixin, DetailView):
     model = Review
     template_name = 'api/detail_review.html'
+    context_object_name = 'review'
 
     def get_context_data(self, **kwargs):
         portfolio = self.object.portfolio
@@ -76,3 +80,33 @@ class ReviewDetail(LoginRequiredMixin, DetailView):
         context['assets'] = assets
 
         return context
+
+    
+@login_required
+def RateReview(request, **kwargs):
+    if request.method == 'POST':
+        rating = request.POST.get('review-rating')
+        review_id = kwargs['pk']
+
+        # if user submitted an empty form, redirect back to original page
+        if rating == None:
+            return redirect(request.POST.get('next', '/'))
+
+        # add 50 points for rating the review
+        request.user.points += 50
+        request.user.save()
+
+        # add appropriate points for person that wrote the review based on the rating
+        reviewer = Review.objects.get(id=review_id).author
+        reviewer.points += ((int(rating) - 1) * 50)
+        reviewer.save()
+
+        # mark the review as rated
+        review = Review.objects.get(id=review_id)
+        review.rated = True
+        review.save()
+
+        # return to original page
+        return redirect(request.POST.get('next', '/'))
+    else:
+        return HttpResponse(status=405)

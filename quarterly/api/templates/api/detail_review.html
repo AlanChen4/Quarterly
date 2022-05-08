@@ -7,6 +7,41 @@
     <div class="row mt-4">
         <h1>Review for {{ review.portfolio.nickname }}</h1>
         <p>Left at {{ review.created }}</p>
+    </div>
+    <div class="row my-2 py-3 light-green-bg">
+        {% if review.rated %}
+            <h5 class="text-center">Thanks! You've already rated this review</h5>
+        {% else %}
+        <form action="{% url 'rate_review' review.id %}" method="post">
+            {% csrf_token %}
+            <h5><strong>Rate this review (+50 points)</strong></h5>
+            <p>Note that once you rate a review, you can not change your original answer</p>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="review-rating" id="rating1" value="1">
+                <label class="form-check-label" for="rating1">Very unhelpful</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="review-rating" id="rating2" value="2">
+                <label class="form-check-label" for="rating2">Not very helpful</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="review-rating" id="rating3" value="3">
+                <label class="form-check-label" for="rating3">Somewhat helpful</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="review-rating" id="rating4" value="4">
+                <label class="form-check-label" for="rating4">Helpful</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="review-rating" id="rating5" value="5">
+                <label class="form-check-label" for="rating5">Very helpful</label>
+            </div>
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input class="btn btn-black" type="submit" value="Leave Review">
+        </form>
+        {% endif %}
+    </div>
+    <div class="row pb-4">
         <div class="col-md-6">
             <h3>Review</h3>
             <input class="form-control" type="text" value="{{ review.description }}" readonly>

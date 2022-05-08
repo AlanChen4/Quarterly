@@ -43,6 +43,11 @@
     transition: 0.8s;
 }
 
+.light-green-bg {
+    background-color: #d9fff5;
+    border-radius: 1rem;
+}
+
 .reviews-table {
     border-collapse: collapse;
     min-width: 400px;

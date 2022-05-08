@@ -1,0 +1,25 @@
+{% extends 'authentication/main.html' %}
+{% block content %}
+<div class="mt-4">
+    <a class="btn btn-black ms-4" href="{% url 'portfolios' %}">Go back</a>
+        <div class="container">
+            <h3>Points history for <strong>{{ user.email }}</strong></h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in user_history %}
+                    <tr>
+                        <td>{{ history.date }}</td>
+                        <td>{{ history.points }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+{% endblock content%}
