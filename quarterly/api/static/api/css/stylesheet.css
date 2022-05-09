@@ -18,6 +18,17 @@
     color: #19e3b0;
 }
 
+.btn-green {
+    border: 2px solid #19e3b0;
+    color: #19e3b0;
+}
+
+.btn-green:hover {
+    border: 2px solid #002233;
+    color: #002233;
+    transition: 0.5s;
+}
+
 .card-body {
     background-color: #002233;
     border-radius: 1rem;
