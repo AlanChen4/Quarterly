@@ -4,8 +4,12 @@
 <div class="container">
     {% if portfolio %}
     <h1 class="text-center">Write a Review</h1>
-    <div class="row mt-4">
+    <div class="row my-4">
         <div class="col-md-6">
+            <div class="row mb-3">
+                <h5>Portfolio Description</h5>
+                <textarea class="form-control" type="text" rows="10" readonly>{{ portfolio.description }}</textarea>
+            </div>
             <div class="row">
                 <h5>Portfolio Assets</h5>
                 <ol class="list-group list-group-numbered">
@@ -20,13 +24,11 @@
                 {% endfor %}
                 </ol>
             </div>
-            <div class="row mt-4">
-                <h5>Portfolio Description</h5>
-                <textarea class="form-control" type="text" rows="10" readonly>{{ portfolio.description }}</textarea>
-            </div>
         </div>
         <form class="col-md-6" method="post">
             {% csrf_token %}
+            {{ form.risk_rating|as_crispy_field }}
+            {{ form.overall_rating|as_crispy_field }}
             {{ form.description|as_crispy_field }}
             <div class="row">
                 <input type="submit" value="Write Review" class="btn btn-black col-md-6 ms-auto">

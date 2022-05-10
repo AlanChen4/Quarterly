@@ -18,11 +18,32 @@ class Portfolio(models.Model):
         return f"{self.user.email}'s {self.nickname}"
 
 
+CHOICES = (
+    (1, 'Recommend significant changes'),
+    (2, 'Recommend moderate changes'),
+    (3, 'Recommend minor changes'),
+    (4, 'Recommend little to no change'),
+    (5, 'Recommend no change'),
+)
 class Review(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True)
-    description = models.TextField(verbose_name='Review Description')
+    risk_rating = models.IntegerField(
+        choices=CHOICES, 
+        validators=[MinValueValidator(1), MaxValueValidator(5)], 
+        null=True, 
+        blank=True,
+        verbose_name='Risk Level'
+    )
+    overall_rating = models.IntegerField(
+        choices=CHOICES, 
+        validators=[MinValueValidator(1), MaxValueValidator(5)], 
+        null=True, 
+        blank=True,
+        verbose_name='Overall Appropriateness'
+    )
+    description = models.TextField(verbose_name='Suggestions and/or feedback')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     rated = models.BooleanField(default=False)

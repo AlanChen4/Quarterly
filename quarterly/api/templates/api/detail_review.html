@@ -44,6 +44,35 @@
     <div class="row pb-4">
         <div class="col-md-6">
             <h3>Review</h3>
+            <label for="risk-rating" class="light-green-bg">Recommended change for <strong>risk level</strong>:</label>
+            {% if review.risk_rating == 1 %}
+            <p id="risk-rating">Recommended Significant Changes</p>
+            {% elif review.risk_rating == 2 %}
+            <p id="risk-rating">Recommended Moderate Changes</p>
+            {% elif review.risk_rating == 3 %}
+            <p id="risk-rating">Recommended Minor Changes</p>
+            {% elif review.risk_rating == 4 %}
+            <p id="risk-rating">Recommended Little To No Changes</p>
+            {% elif review.risk_rating == 5 %}
+            <p id="risk-rating">Recommended No Changes</p>
+            {% else %}
+            <p id="risk-rating">Did not leave a recommendation</p>
+            {% endif %}
+
+            <label for="risk-rating" class="light-green-bg">Recommended change for <strong>Overall Portfolio</strong>:</label>
+            {% if review.overall_rating == 1 %}
+            <p id="risk-rating">Recommended Significant Changes</p>
+            {% elif review.overall_rating == 2 %}
+            <p id="risk-rating">Recommended Moderate Changes</p>
+            {% elif review.overall_rating == 3 %}
+            <p id="risk-rating">Recommended Minor Changes</p>
+            {% elif review.overall_rating == 4 %}
+            <p id="risk-rating">Recommended Little To No Changes</p>
+            {% elif review.overall_rating == 5 %}
+            <p id="risk-rating">Recommended No Changes</p>
+            {% else %}
+            <p id="risk-rating">Did not leave a recommendation</p>
+            {% endif %}
             <textarea class="form-control" type="text" rows="10" readonly>{{ review.description }}</textarea>
         </div>
         <div class="col-md-6">

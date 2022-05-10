@@ -12,7 +12,7 @@ from api.models import Asset, Portfolio, Review
 
 class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
-    fields = ('description',)
+    fields = ('description', 'risk_rating', 'overall_rating')
     template_name = 'api/create_review.html'
 
     def _get_valid_portfolio(self):
