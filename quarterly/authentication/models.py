@@ -45,7 +45,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     dob = models.DateField()
-    points = models.PositiveIntegerField()
+    points = models.PositiveIntegerField(default=100)
     history = HistoricalRecords()
 
     USERNAME_FIELD = 'email'
