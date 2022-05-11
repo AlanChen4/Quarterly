@@ -1,10 +1,15 @@
 asgiref==3.5.0
+certifi==2021.10.8
+charset-normalizer==2.0.12
 crispy-bootstrap5==0.6
 dj-database-url==0.5.0
 Django==4.0.4
 django-crispy-forms==1.14.0
 django-simple-history==3.0.0
+idna==3.3
 psycopg2==2.9.3
+requests==2.27.1
 sqlparse==0.4.2
 tzdata==2022.1
+urllib3==1.26.9
 whitenoise==6.0.0
