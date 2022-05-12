@@ -1,0 +1,20 @@
+{% extends 'adminstats/main.html' %}
+{% block content %}
+<div class="container pt-5">
+    <h3>AdminStats</h1>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <h1 class="text-center">Week</h1>
+            <h1 class="text-center"><strong>{{ week_users }}</strong></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text-center">Total</h1>
+            <h1 class="text-center"><strong>{{ total_users }}</strong></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text-center">Growth</h1>
+            <h1 class="text-center" style="color: green;"><strong>{{ growth }} %</strong></h1>
+        </div>
+    </div>
+</div>
+{% endblock content %}
