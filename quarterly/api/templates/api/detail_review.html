@@ -84,7 +84,7 @@
                         <div class="fw-bold">{{ asset.ticker }}</div>
                         {{ asset.name }}
                     </div>
-                    <span class="badge bg-success rounded-pill">{{ asset.holdings }} %</span>
+                    <span class="badge bg-success rounded-pill">{{ asset.get_percentage }} %</span>
                 </li>
             {% endfor %}
             </ol>

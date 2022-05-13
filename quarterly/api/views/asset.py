@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from api.models import Asset, Portfolio
 
@@ -64,21 +64,12 @@ def AssetCreateFunctionView(request, **kwargs):
 
 
 @login_required
-def AssetUpdate(request, **kwargs):
+def AssetDelete(request, **kwargs):
     if request.method == 'POST':
         asset = Asset.objects.filter(id=kwargs['pk'])
         if not asset.exists():
             return HttpResponse(status=404)
-        else:
-            if request.POST.get('submit-type') == 'Update':
-                asset.update(
-                    ticker=request.POST.get('ticker'),
-                    name=request.POST.get('name'),
-                    holdings=request.POST.get('holdings'),
-                )
-            elif request.POST.get('submit-type') == 'Delete':
-                asset.delete()
-            next = request.POST.get('next', '/')
-            return HttpResponseRedirect(next)
+        asset.delete()
+        return HttpResponseRedirect(reverse('update_portfolio', kwargs={'pk': kwargs['pk']}))
     else:
         return HttpResponse(status=405)

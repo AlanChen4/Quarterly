@@ -9,7 +9,8 @@ class Portfolio(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=255)
-    description = models.TextField()
+    risk_tolerance = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(verbose_name="Additional Information", blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()
@@ -57,9 +58,13 @@ class Asset(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     ticker = models.CharField(max_length=8)
     name = models.CharField(max_length=255)
-    holdings = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
+    holdings = models.FloatField()
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     history = HistoricalRecords()
 
     def __str__(self):
-        return f"{self.ticker} ({self.holdings}%)"
+        return f"{self.ticker} ${self.holdings}"
+
+    def get_percentage(self):
+        portfolio_total = sum([asset.holdings for asset in Asset.objects.filter(portfolio=self.portfolio)])
+        return (self.holdings / portfolio_total) * 100

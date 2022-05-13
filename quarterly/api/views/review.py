@@ -78,6 +78,7 @@ class ReviewDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data()
         context['portfolio'] = portfolio
         context['assets'] = assets
+        context['assets_total'] = sum([asset.holdings for asset in assets])
 
         return context
 
