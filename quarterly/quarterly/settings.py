@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
 
     'api',
+    'adminstats',
     'authentication',
 ]
 
