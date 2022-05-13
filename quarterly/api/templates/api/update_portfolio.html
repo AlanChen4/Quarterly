@@ -2,67 +2,75 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
-    <h1>{{portfolio.nickname}}</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post">
-                {% csrf_token %}
-                {{form.nickname|as_crispy_field}}
-                {{form.description|as_crispy_field}}
-                <input class="btn btn-black" type="submit" value="Update Portfolio Details" />
-            </form>
-        </div>
-        <div class="col-md-6">
-            {% for asset in assets %}
-                <form action="{% url 'update_asset' asset.id %}" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="form-label">Ticker</label>
-                            <input class="form-control mb-3" type="text" name="ticker" value="{{asset.ticker}}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Name</label>
-                            <input class="form-control mb-3" type="text" name="name" value="{{asset.name}}">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Holdings %</label>
-                            <input class="form-control mb-3" type="text" name="holdings" value="{{asset.holdings}}">
-                        </div>
-                    </div>
-                    <div class="row mb-5">
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <input class="btn btn-black col-md-2 mx-2" type="submit" name="submit-type" value="Update" />
-                        <input class="btn btn-outline-danger col-md-2 mx-2" type="submit" name="submit-type" value="Delete" />
-                    </div>
-                </form>
-            {% endfor %}
-            <form action="{% url 'create_asset_function' portfolio.id %}" method="post">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="form-label">Ticker</label>
-                        <input class="form-control mb-3" type="text" name="ticker" value="{{asset.ticker}}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Name</label>
-                        <input class="form-control mb-3" type="text" name="name" value="{{asset.name}}">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Holdings %</label>
-                        <input class="form-control mb-3" type="text" name="holdings" value="{{asset.holdings}}">
-                    </div>
+    <h1>Update Portfolio</h1>
+    <form action="update/" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ my_csrf_token }}">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="d-flex flex-row my-2">
+                    <h4>Portfolio related</h4>
                 </div>
-                <div class="row mb-5">
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <input class="btn btn-black col-md-2 mx-2" type="submit" value="Add">
+                {{ portfolio_form|crispy }}
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-row my-2">
+                    <h4>Assets</h4>
+                    <input class="btn btn-black ms-auto py-1 px-2" type="button" value="Add new asset" id="add-more">
                 </div>
-            </form>
+                <div id="form_set">
+                    {% for form in asset_formset.forms %}
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {{ form.ticker|as_crispy_field }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ form.holdings|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row">
+                                <button class="btn btn-outline-danger ms-auto" onclick="removeRow(this)" type="button">Remove</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div id="empty-form" style="display:none">
+                        <div class="row">
+                            <div class="col-md-3">
+                                {{ asset_formset.empty_form.ticker|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ asset_formset.empty_form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ asset_formset.empty_form.holdings|as_crispy_field }}
+                            </div>
+                            <div class="d-flex flex-row">
+                                <button class="btn btn-outline-danger ms-auto" onClick="removeRow(this)" type="button">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="total-forms" value="1" type="hidden">
+                <script>
+                    $('#add-more').click(function() {
+                        var form_idx = $('#total-forms').val();
+                        $('#form_set').append($('#empty-form').html().replace(/__prefix__/g, form_idx));
+                        $('#total-forms').val(parseInt(form_idx) + 1);
+                    });
+                    function removeRow(elem){
+                        $(elem).parent('div').parent('div').remove();
+                    }
+                </script>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-            <a class="btn col-md-3 ms-auto btn-black" href="{% url 'portfolios' %}">Finish</a>
+        <div class="d-flex flex-row">
+            <input class="btn btn-green ms-auto mx-2" type="submit" value="Update portfolio">
+            <a class="btn btn-black mx-2" href="{% url 'portfolios' %}">Finish</a>
         </div>
-    </div>
+        </div>
+    </form>
 </div>
 {% endblock content %}
