@@ -2,16 +2,12 @@
 {% block content %}
 <nav class="navbar">
     <div class="container">
-        <a class="ms-auto btn btn-green p-2" href="{% url 'points' user.id %}">Points: {{ user.points }}
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trophy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <desc>Download more icon variants from https://tabler-icons.io/i/trophy</desc>
+        <a class="ms-auto mx-1 btn btn-green p-2" href="{% url 'points' user.id %}">Points: {{ user.points }}
+        <a class="mx-1 btn btn-black p-2" href="{% url 'leaderboard' %}">View Leaderboard
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-medal" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-                <line x1="7" y1="4" x2="17" y2="4"></line>
-                <path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path>
-                <circle cx="5" cy="9" r="2"></circle>
-                <circle cx="19" cy="9" r="2"></circle>
+                <path d="M12 4v3m-4 -3v6m8 -6v6"></path>
+                <path d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5z"></path>
             </svg>
         </a>
     </div>
@@ -21,7 +17,6 @@
         <h1>My Portfolios</h1>
         <a class="ms-auto p-2 a-black" target="_blank" rel="noopener noreferrer" href="https://discord.gg/yYKGbntvfk">Join our beta team
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-discord" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <desc>Download more icon variants from https://tabler-icons.io/i/brand-discord</desc>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <circle cx="9" cy="12" r="1"></circle>
                 <circle cx="15" cy="12" r="1"></circle>

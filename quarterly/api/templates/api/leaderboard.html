@@ -1,0 +1,27 @@
+{% extends 'api/main.html' %}
+{% block content %}
+<div class="container">
+    <a class="a-black" href="{% url 'portfolios' %}">Go back</a>
+    <h1>Leaderboard</h1>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Username</th>
+                <th scope="col">Points</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td scope="row">{{ user.display_name }}</td>
+                <td scope="row">{{ user.points }}</td>
+                <td scope="row">Coming Soon</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

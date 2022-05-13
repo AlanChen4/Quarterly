@@ -17,4 +17,6 @@ urlpatterns = [
     path('review/', ReviewCreate.as_view(), name='create_review'),
     path('review/<uuid:pk>/', ReviewDetail.as_view(), name='review'),
     path('review/<uuid:pk>/rate/', RateReview, name='rate_review'),
+
+    path('leaderboard/', LeaderboardView.as_view(), name='leaderboard'),
 ]

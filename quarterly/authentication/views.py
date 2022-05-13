@@ -44,7 +44,7 @@ class RegisterPage(FormView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
-    fields = ['email', 'display_name']
+    fields = ['email', 'display_name', 'visible']
     template_name = 'authentication/profile.html'
 
     def form_valid(self, form):

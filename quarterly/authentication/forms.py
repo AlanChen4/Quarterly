@@ -8,4 +8,4 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'display_name', )
+        fields = ('email', 'display_name', 'visible')

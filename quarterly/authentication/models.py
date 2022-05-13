@@ -44,6 +44,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField('email address', unique=True)
     display_name = models.CharField(null=False, max_length=255, unique=True, verbose_name='username')
     points = models.PositiveIntegerField(default=100)
+    visible = models.BooleanField(default=True, verbose_name="Show on leaderboard")
     history = HistoricalRecords()
 
     USERNAME_FIELD = 'email'
