@@ -42,14 +42,12 @@ class CustomUser(AbstractUser):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     username = None
     email = models.EmailField('email address', unique=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    dob = models.DateField()
+    display_name = models.CharField(null=False, max_length=255, unique=True, verbose_name='username')
     points = models.PositiveIntegerField(default=100)
     history = HistoricalRecords()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'dob']
+    REQUIRED_FIELDS = ['display_name']
 
     objects = CustomUserManager()
 

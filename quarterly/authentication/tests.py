@@ -9,18 +9,14 @@ class AuthenticationTestCase(TestCase):
         self.client = Client()
         self.mock_user = CustomUser.objects.create(
             email='mock@gmail.com',
-            first_name='fname',
-            last_name='lname',
-            dob='2000-01-01',
+            display_name='mock',
             password='testPassword!'
         )
     
     def test_registration(self):
         request = self.client.post('/register/', data={
             'email': 'test@gmail.com',
-            'first_name': 'fname',
-            'last_name': 'lname',
-            'dob': '2000-01-01',
+            'display_name': 'test',
             'password1': 'testPassword!',
             'password2': 'testPassword!'
         })
