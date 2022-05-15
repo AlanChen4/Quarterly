@@ -2,14 +2,16 @@
 {% block content %}
 <nav class="navbar">
     <div class="container">
-        <a class="ms-auto mx-1 btn btn-green p-2" href="{% url 'points' user.id %}">Points: {{ user.points }}
-        <a class="mx-1 btn btn-black p-2" href="{% url 'leaderboard' %}">View Leaderboard
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-medal" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M12 4v3m-4 -3v6m8 -6v6"></path>
-                <path d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5z"></path>
-            </svg>
-        </a>
+        <div class="d-flex flex-row ms-auto">
+            <a class="mx-1 btn btn-green p-2" href="{% url 'points' user.id %}">Points: {{ user.points }}
+            <a class="mx-1 btn btn-black p-2" href="{% url 'leaderboard' %}">View Leaderboard
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-medal" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 4v3m-4 -3v6m8 -6v6"></path>
+                    <path d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5z"></path>
+                </svg>
+            </a>
+        </div>
     </div>
 </nav>
 <div class="container">
@@ -69,10 +71,9 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row">
-        <h4 class="my-4">Received Reviews</h4>
-        <a class="btn btn-black my-4 ms-auto" href="{% url 'create_review' %}">
-            Review A Portfolio
+    <div class="d-flex flex-row my-4">
+        <h4>Received Reviews</h4>
+        <a class="btn btn-black ms-auto mx-1" href="{% url 'create_review' %}">Review A Portfolio
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"></path>
