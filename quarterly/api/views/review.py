@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 
 from api.models import Asset, Portfolio, Review
@@ -111,3 +112,12 @@ def RateReview(request, **kwargs):
         return redirect(request.POST.get('next', '/'))
     else:
         return HttpResponse(status=405)
+
+
+class ReviewList(LoginRequiredMixin, ListView):
+    model = Review
+    context_object_name = 'reviews'
+    template_name = 'api/reviews.html'
+
+    def get_queryset(self):
+        return Review.objects.filter(author=self.request.user)

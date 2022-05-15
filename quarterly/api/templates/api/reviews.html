@@ -1,0 +1,29 @@
+{% extends 'api/main.html' %}
+{% block content %}
+<div class="container">
+    <a class="a-black" href="{% url 'portfolios' %}">Go back</a>
+    <h1>Your Reviews</h1>
+    <table class="reviews-table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Review Has Been Rated</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for review in reviews %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td scope="row">{{ review.created }}</td>
+                {% if review.rated %}
+                    <td scope="row">Yes</td>
+                {% else %}
+                    <td scope="row">No</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
