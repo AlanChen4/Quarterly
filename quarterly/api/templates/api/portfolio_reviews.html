@@ -1,0 +1,29 @@
+{% extends 'api/main.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Reviews</h1>
+    <p>If you don't have an account, save/bookmark this page to check if for new feedback (refresh required)</p>
+    <table class="reviews-table w-100 mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for review in reviews %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td scope="row">{{ review.description|truncatechars:20 }}</td>
+                <td scope="row">{{ review.created }}</td>
+                <td scope="row">
+                    <a href="{% url 'review' review.id%}">View</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

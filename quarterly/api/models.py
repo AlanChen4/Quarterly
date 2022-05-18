@@ -7,7 +7,7 @@ from simple_history.models import HistoricalRecords
 
 class Portfolio(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     nickname = models.CharField(max_length=255)
     risk_tolerance = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(verbose_name="Additional Information", blank=True, null=True)
@@ -16,6 +16,8 @@ class Portfolio(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
+        if self.user == None:
+            return f"Anonymous Portfolio"
         return f"{self.user.email}'s {self.nickname}"
 
 

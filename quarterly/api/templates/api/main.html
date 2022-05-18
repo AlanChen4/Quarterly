@@ -41,36 +41,38 @@
     }
 </style>
 <body>
-    <!-- sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
-        <div class="offcanvas-header">
-            <h3 class="offcanvas-title d-none d-sm-block" id="offcanvas">Quarterly</h3>
-            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="close" />
+    {% if user.is_authenticated %}
+        <!-- sidebar -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+            <div class="offcanvas-header">
+                <h3 class="offcanvas-title d-none d-sm-block" id="offcanvas">Quarterly</h3>
+                <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="close" />
+            </div>
+            <div class="offcanvas-body px-0">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+                    <li class="nav-item">
+                        <a href="{% url 'portfolios' %}" class="nav-link text-truncate ms-2">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'profile' user.id %}" class="nav-link text-truncate ms-2">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link text-truncate ms-2">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="offcanvas-body px-0">
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
-                <li class="nav-item">
-                    <a href="{% url 'portfolios' %}" class="nav-link text-truncate ms-2">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'profile' user.id %}" class="nav-link text-truncate ms-2">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'logout' %}" class="nav-link text-truncate ms-2">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <button class="btn m-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-        <i data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="m0 0h24v24h0z" fill="none"></path>
-                <line x1="4" y1="6" x2="20" y2="6"></line>
-                <line x1="4" y1="12" x2="20" y2="12"></line>
-                <line x1="4" y1="18" x2="20" y2="18"></line>
-            </svg>
-        </i>
-    </button>
+        <button class="btn m-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+            <i data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewbox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="m0 0h24v24h0z" fill="none"></path>
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+            </i>
+        </button>
+    {% endif %}
     {% block content %}
 
     {% endblock content %}

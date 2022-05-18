@@ -1,9 +1,6 @@
 {% extends 'api/main.html' %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <a class="btn btn-black col-md-1" href="{% url 'portfolios' %}">Go back</a>
-    </div>
     <div class="row mt-4">
         <h1>Review for {{ review.portfolio.nickname }}</h1>
         <p>Left at {{ review.created }}</p>
@@ -77,6 +74,7 @@
         </div>
         <div class="col-md-6">
             <h3>Portfolio Summary</h3>
+            <textarea class="form-control" type="text" rows="5" readonly>{{ portfolio.description }}</textarea>
             <ol class="list-group list-group-numbered">
             {% for asset in assets %}
                 <li class="list-group-item d-flex justify-content-between align-items-start">

@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -11,15 +12,11 @@ from django.urls import reverse_lazy
 from api.models import Asset, Portfolio, Review
 
 
-class ReviewCreate(LoginRequiredMixin, CreateView):
-    model = Review
-    fields = ('description', 'risk_rating', 'overall_rating')
-    template_name = 'api/create_review.html'
+class PickPortfolio(LoginRequiredMixin, TemplateView):
+    template_name = 'api/pick_portfolio.html'
 
-    def _get_valid_portfolio(self):
+    def _get_valid_portfolios(self):
         """
-        Return respective portfolio to write review on to the context
-        
         Sort by:
         - Number of reviews
         - To be added...
@@ -40,12 +37,29 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
             if review.portfolio != None:
                 portfolios = portfolios.exclude(id=review.portfolio.id)
 
-        # select first portfolio to meet all conditions
-        return portfolios[0] if len(portfolios) > 0 else None
+        return portfolios
 
+    def get_context_data(self):
+        context = super().get_context_data()
+        
+        context['portfolios'] = self._get_valid_portfolios()
+
+        return context
+
+
+class ReviewCreate(LoginRequiredMixin, CreateView):
+    model = Review
+    fields = ('description', 'risk_rating', 'overall_rating')
+    template_name = 'api/create_review.html'
+
+    def _get_portfolio(self):
+        """
+        Return respective portfolio to write review on to the context
+        """
+        return Portfolio.objects.get(id=self.kwargs['portfolio_id'])
 
     def dispatch(self, request, *args, **kwargs):
-        self.portfolio = self._get_valid_portfolio()
+        self.portfolio = self._get_portfolio()
         self.assets = Asset.objects.filter(portfolio=self.portfolio) if self.portfolio is not None else None
 
         return super(ReviewCreate, self).dispatch(request, *args, **kwargs)
@@ -64,7 +78,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('portfolios')
+        return reverse_lazy('pick_portfolio')
 
 
 class ReviewDetail(LoginRequiredMixin, DetailView):
@@ -74,9 +88,9 @@ class ReviewDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         portfolio = self.object.portfolio
-        assets = Asset.objects.all().filter(portfolio=portfolio.id)
+        assets = Asset.objects.filter(portfolio=portfolio)
 
-        context = super().get_context_data()
+        context = super().get_context_data(**kwargs)
         context['portfolio'] = portfolio
         context['assets'] = assets
         context['assets_total'] = sum([asset.holdings for asset in assets])

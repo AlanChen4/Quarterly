@@ -7,7 +7,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.urls import reverse, reverse_lazy
 
-from api.forms import AssetFormSet, PortfolioForm
+from api.forms import AssetFormSet, PortfolioForm, PortfolioFormAnon
 from api.models import Asset, Portfolio, Review
 
 
@@ -100,7 +100,7 @@ def PortfolioUpdateFunction(request, **kwargs):
         return HttpResponse(status=405)
 
 
-class PortfolioCreate(LoginRequiredMixin, TemplateView):
+class PortfolioCreate(TemplateView):
     model = Portfolio
     template_name = 'api/create_portfolio.html'
 
@@ -117,15 +117,40 @@ class PortfolioCreate(LoginRequiredMixin, TemplateView):
         return reverse_lazy('portfolios')
 
 
-@login_required
+class PortfolioCreateAnon(TemplateView):
+    template_name = 'api/create_portfolio_anon.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['asset_formset'] = AssetFormSet
+        context['my_csrf_token'] = get_token(self.request)
+        context['portfolio_form'] = PortfolioFormAnon
+
+        return context
+
+
+class PortfolioReviews(TemplateView):
+    template_name = 'api/portfolio_reviews.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        portfolio = Portfolio.objects.get(id=self.kwargs['pk'])
+        context['portfolio'] = portfolio
+        context['reviews'] = Review.objects.filter(portfolio=portfolio)
+
+        return context
+
+
 def PortfolioCreateFunction(request):
     if request.method == 'POST':
         post_data = request.POST
 
         # create portfolio
         portfolio = Portfolio.objects.create(
-            user=request.user,
-            nickname=str(post_data['nickname']),
+            user=request.user if request.user.is_authenticated else None,
+            nickname='Anonymous',
             risk_tolerance=str(post_data['risk_tolerance']),
             description=str(post_data['description'])
         )
@@ -146,6 +171,8 @@ def PortfolioCreateFunction(request):
                 holdings=float(post_data[holdings_key])
             )
 
+        if post_data['anonymous'] == 'True':
+            return HttpResponseRedirect(reverse('portfolio_reviews', kwargs={'pk': portfolio.id}))
         return HttpResponseRedirect(reverse('portfolios'))
     else:
         return HttpResponse(status=405)

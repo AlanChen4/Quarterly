@@ -1,10 +1,11 @@
 {% extends 'api/main.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-    <h1>Add a new portfolio</h1>
+<div class="container mt-5">
+    <h1>Share your portfolio</h1>
+    <p>Consider creating an account to add multiple portfolios, easily track feedback, and collect rewards!</p>
     <p>*Please note that, although you will input the dollar amount of each asset, it will automatically be converted to percentages when shown to others.</p>
-    <form action="create/" method="post">
+    <form action="/portfolio/create/" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ my_csrf_token }}">
         <div class="row mt-4">
             <div class="col-md-6">
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <input id="total-forms" value="1" type="hidden">
-                    <input id="anonymous" value="False" type="hidden">
+                    <input name="anonymous" value="True" type="hidden">
                 <script>
                     $('#add-more').click(function() {
                         var form_idx = $('#total-forms').val();
@@ -58,7 +59,7 @@
             </div>
         </div>
         <div class="d-flex flex-row">
-            <input class="btn btn-green ms-auto" type="submit" value="Create portfolio">
+            <input class="btn btn-green ms-auto" type="submit" value="Share your portfolio">
         </div>
     </form>
 </div>
