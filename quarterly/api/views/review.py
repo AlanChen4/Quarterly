@@ -134,4 +134,4 @@ class ReviewList(LoginRequiredMixin, ListView):
     template_name = 'api/reviews.html'
 
     def get_queryset(self):
-        return Review.objects.filter(author=self.request.user)
+        return Review.objects.filter(author=self.request.user).order_by('-created')
