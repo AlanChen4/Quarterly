@@ -1,0 +1,25 @@
+{% extends 'api/main.html' %}
+{% block content %}
+<div class="container">
+    <a href="{% url 'portfolios' %}">Return home</a>
+    <h1 class="mb-3">Pick a portfolio to review</h1>
+    <table class="table">
+        <thead>
+            <th>Risk tolerance</th>
+            <th>Description</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for portfolio in portfolios %}
+                <tr>
+                    <td>{{ portfolio.risk_tolerance }}</td>
+                    <td>{{ portfolio.description|truncatechars:40 }}</td>
+                    <td>
+                        <a href="{% url 'create_review' portfolio.id %}">Select</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
